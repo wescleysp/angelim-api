@@ -26,5 +26,6 @@ Route.get('/', async () => {
 
 Route.resource('people', 'PeopleController').apiOnly()
 Route.resource('products', 'ProductsController').apiOnly()
+Route.resource('types', 'TypesController').apiOnly()
 
 

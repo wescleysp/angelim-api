@@ -5,6 +5,12 @@ export default class Type extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public description: string
+
+  @column()
+  public table: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
