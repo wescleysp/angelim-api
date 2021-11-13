@@ -9,7 +9,7 @@ export default class People extends BaseSchema {
       table.string('name', 100)
       table.string('surname', 100)
       table.string('cpfcnpj', 15).unique()
-      table.string('ie', 9)
+      table.string('ie', 14)
       table.string('email', 100)
       table.string('cellphone', 11) 
       table.string('phone', 10)
