@@ -30,5 +30,12 @@ Route.resource('types', 'TypesController').apiOnly()
 Route.resource('providers', 'ProvidersController').apiOnly()
 Route.resource('customers', 'CustomersController').apiOnly()
 Route.resource('sellers', 'SellersController').apiOnly()
+Route.resource('order', 'OrdersController').apiOnly()
+Route.resource('orderitems', 'OrderItemsController').apiOnly()
+Route.resource('nfes', 'NfesController').apiOnly()
+Route.resource('transports', 'TransportsController').apiOnly()
+Route.resource('duties', 'DutiesController').apiOnly()
+Route.resource('expenses', 'ExpensesController').apiOnly()
+
 
 

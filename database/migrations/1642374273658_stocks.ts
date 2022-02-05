@@ -1,30 +1,43 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class CashFlows extends BaseSchema {
-  protected tableName = 'cash_flows'
+export default class Stocks extends BaseSchema {
+  protected tableName = 'stocks'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.decimal('value', 10, 2)
+
+      table
+        .integer('product_id')
+        .unsigned()
+        .references('products.id')
+        .onUpdate('CASCADE')
+
+      table.integer('volume')
       table
         .integer('type_id')
         .unsigned()
         .references('types.id')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
+
       table
-        .integer('provider_id')
+        .integer('order_id')
         .unsigned()
-        .references('people.id')
+        .references('sales_orders.id')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
-      table.datetime('duedate')
+
       table.string('description')
-      table.boolean('delete')
+
+      table.boolean('logical_delete')
         .notNullable()
         .defaultTo(0)
 
+      table
+        .integer('user_id')
+        .unsigned()
+        .references('users.id')
+        .onUpdate('CASCADE')
+      
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

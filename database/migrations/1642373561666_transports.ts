@@ -1,18 +1,18 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Stocks extends BaseSchema {
-  protected tableName = 'stocks'
+export default class Transports extends BaseSchema {
+  protected tableName = 'transports'
 
-  public async up () {
+  public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+
       table
-        .integer('product_id')
+        .integer('order_id')
         .unsigned()
-        .references('products.id')
+        .references('sales_orders.id')
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
-      table.integer('volume')
       table
         .integer('type_id')
         .unsigned()
@@ -25,23 +25,22 @@ export default class Stocks extends BaseSchema {
         .references('people.id')
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
-      table
-        .integer('client_id')
-        .unsigned()
-        .references('people.id')
-        .onUpdate('CASCADE')
-        .onDelete('SET NULL')
-      table.string('description')
-      table.boolean('delete')
-        .notNullable()
-        .defaultTo(0)
+      table.string('cart', 80)
+      table.string('horse', 80)
+      table.string('ferry', 80)
+      table.string('origin')
+      table.string('destiny')
+      table.datetime('date_origin')
+      table.datetime('date_destiny')
+      table.decimal('valuemeters', 10, 2)
+      table.decimal('loading', 10, 2)
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })
   }
 
-  public async down () {
+  public async down() {
     this.schema.dropTable(this.tableName)
   }
 }

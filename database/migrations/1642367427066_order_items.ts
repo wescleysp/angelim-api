@@ -1,25 +1,32 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Representations extends BaseSchema {
-  protected tableName = 'representations'
+export default class OrderItems extends BaseSchema {
+  protected tableName = 'order_items'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+
       table
         .integer('order_id')
         .unsigned()
-        .references('orders.id')
+        .references('sales_orders.id')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
+        .onDelete('SET NULL') 
       table
-        .integer('provider_id')
+        .integer('product_id')
         .unsigned()
-        .references('people.id')
+        .references('products.id')
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
-      table.decimal('value', 10, 2)
-      
+      table.integer('qtdrequested')
+      table.integer('qtdserverd')
+      table.decimal('inputvalue', 10, 2)
+      table.decimal('outputvalue', 10, 2)
+      table.boolean('logical_delete')
+        .notNullable()
+        .defaultTo(0)
+
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

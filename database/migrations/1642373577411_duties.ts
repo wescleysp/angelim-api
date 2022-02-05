@@ -6,6 +6,7 @@ export default class Duties extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+
       table
         .integer('transport_id')
         .unsigned()
@@ -18,7 +19,7 @@ export default class Duties extends BaseSchema {
       table.string('status_m', 10)
       table.decimal('value', 10, 2)
       table.decimal('discount', 10, 2)
-      
+
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

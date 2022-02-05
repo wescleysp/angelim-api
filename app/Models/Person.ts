@@ -3,11 +3,14 @@ import {
   BaseModel,
   column, 
   hasOne, 
-  HasOne, 
+  HasOne,
+  belongsTo,
+  BelongsTo
 } from '@ioc:Adonis/Lucid/Orm'
 
 import Type from 'App/Models/Type'
 import Adress from 'App/Models/Adress'
+import SalesOrder from 'App/Models/SalesOrder'
 
 export default class Person extends BaseModel {
   @column({ isPrimary: true })
@@ -46,8 +49,15 @@ export default class Person extends BaseModel {
   @hasOne(() => Type)
   public type: HasOne<typeof Type>
 
+  @hasOne(() => SalesOrder, {
+    foreignKey: 'provider_id'
+  })
+  public provider: HasOne<typeof SalesOrder>
+
   @hasOne(() => Adress, {
     foreignKey: 'person_id'
   })
   public adresses: HasOne<typeof Adress>
+
+  
 }

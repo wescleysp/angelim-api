@@ -17,6 +17,10 @@ export default class People extends BaseSchema {
         .notNullable()
         .defaultTo(1)
 
+      table.boolean('logical_delete')
+      .notNullable()
+      .defaultTo(0)
+
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })
