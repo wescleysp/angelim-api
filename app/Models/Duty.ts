@@ -6,7 +6,13 @@ export default class Duty extends BaseModel {
   public id: number
 
   @column()
+  public order_id: number
+
+  @column()
   public transport_id: number
+
+  @column()
+  public provider_id: number
 
   @column()
   public cte: string

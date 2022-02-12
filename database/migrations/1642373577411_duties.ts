@@ -8,11 +8,25 @@ export default class Duties extends BaseSchema {
       table.increments('id')
 
       table
+        .integer('order_id')
+        .unsigned()
+        .references('sales_orders.id')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
+      table
         .integer('transport_id')
         .unsigned()
         .references('transports.id')
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
+      table
+        .integer('provider_id')
+        .unsigned()
+        .references('people.id')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
+
+
       table.string('cte', 50)
       table.string('ncte', 50)
       table.string('nmanifest', 50)

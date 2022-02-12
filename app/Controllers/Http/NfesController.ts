@@ -93,7 +93,7 @@ export default class NfesController {
     const order = await OrderSales.query().where('id', params.id).preload('order_items')
     order[0].merge(dataOrder).save()
 
-    // Criação flow cliente
+    // Criação Cash flow cliente
     await CashFlow.create({
       value: newItems.reduce(
         (acumulador: number, valorAtual: any) => 
