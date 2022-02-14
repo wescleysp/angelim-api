@@ -4,8 +4,6 @@ import {
   column, 
   hasOne, 
   HasOne,
-  belongsTo,
-  BelongsTo
 } from '@ioc:Adonis/Lucid/Orm'
 
 import Type from 'App/Models/Type'

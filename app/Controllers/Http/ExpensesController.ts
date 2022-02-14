@@ -12,6 +12,7 @@ export default class ExpensesController {
     if (check.length > 0) {
       await Promise.all(check.map(async (element: any, idx: number) => {
         await check[idx].delete()
+        console.log(element);
       }))
     }
 
@@ -33,7 +34,7 @@ export default class ExpensesController {
     let responseData: any = [];
     await Promise.all(expenses.map(async (element: any, idx: number) => {
       let data = expenses[idx].serializeAttributes()
-      data.duedate = format(data.duedate, 'yyyy-MM-dd')
+      data.duedate = format(element.duedate, 'yyyy-MM-dd')
       responseData.push(data)
     }));
 

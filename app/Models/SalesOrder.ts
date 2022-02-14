@@ -1,4 +1,6 @@
 import { DateTime } from 'luxon'
+import { format } from 'date-fns'
+
 import {
   BaseModel,
   column,
@@ -8,7 +10,7 @@ import {
   HasOne,
   afterCreate
 } from '@ioc:Adonis/Lucid/Orm'
-import { format } from 'date-fns'
+
 import OrderItem from 'App/models/OrderItem'
 import CashFlow from 'App/models/CashFlow'
 import Seller from 'App/models/Seller'
