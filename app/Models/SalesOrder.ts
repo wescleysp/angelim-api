@@ -1,6 +1,4 @@
 import { DateTime } from 'luxon'
-import { format } from 'date-fns'
-
 import {
   BaseModel,
   column,
@@ -11,9 +9,11 @@ import {
   afterCreate
 } from '@ioc:Adonis/Lucid/Orm'
 
-import OrderItem from 'App/models/OrderItem'
-import CashFlow from 'App/models/CashFlow'
-import Seller from 'App/models/Seller'
+import { format } from 'date-fns'
+
+import OrderItem from 'App/Models/OrderItem'
+import CashFlow from 'App/Models/CashFlow'
+import Seller from 'App/Models/Seller'
 
 export default class SalesOrder extends BaseModel {
   @column({ isPrimary: true })
@@ -74,6 +74,4 @@ export default class SalesOrder extends BaseModel {
   })
   public seller: HasOne<typeof Seller>
 
-
-  
 }
