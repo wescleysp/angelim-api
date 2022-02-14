@@ -6,6 +6,7 @@ import OrderSales from 'App/Models/SalesOrder'
 import CashFlow from 'App/Models/CashFlow'
 import OrderItem from 'App/Models/OrderItem'
 import Seller from 'App/Models/Seller'
+import Stock from 'App/Models/Stock'
 
 const calcTotals = (items: any) => {
   let totalValue = 0;
@@ -159,6 +160,30 @@ export default class OrdersController {
 
   }
 
-  public async destroy({ params }: HttpContextContract) { }
+  public async destroy({ params }: HttpContextContract) {
+    
+    // cancelamento Order
+    const order = await OrderSales.findByOrFail('id', params.id)
+    order.merge({logical_delete: 1}).save();
+
+    // cancelamento Itens
+    const orderItems = await OrderItem.query().where('order_id', params.id)
+    orderItems.forEach((item, idx) => {
+      orderItems[idx].merge({logical_delete: 1}).save()
+    })
+
+    // Canecelamento Fluxo de Caixa
+    const cashFlow = await CashFlow.query().where('order_id', params.id)
+    cashFlow.forEach((item, idx) => {
+      cashFlow[idx].merge({logical_delete: 1}).save()
+    })
+
+    // Canecelamento Estoque
+    const stock = await Stock.query().where('order_id', params.id)
+    stock.forEach((item, idx) => {
+      stock[idx].merge({logical_delete: 1}).save()
+    })
+
+  }
 
 }

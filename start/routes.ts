@@ -36,6 +36,11 @@ Route.resource('nfes', 'NfesController').apiOnly()
 Route.resource('transports', 'TransportsController').apiOnly()
 Route.resource('duties', 'DutiesController').apiOnly()
 Route.resource('expenses', 'ExpensesController').apiOnly()
+Route.resource('cashflows', 'CashFlowsController').apiOnly()
+Route.resource('stocks', 'StocksController').apiOnly()
+Route.resource('users', 'UsersController').apiOnly()
+Route.resource('dashcashes', 'DashCashesController').apiOnly()
+Route.resource('dashstocks', 'DashStocksController').apiOnly()
 
 
 

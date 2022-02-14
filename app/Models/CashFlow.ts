@@ -24,6 +24,9 @@ export default class CashFlow extends BaseModel {
   public description: string
 
   @column()
+  public status: number
+
+  @column()
   public logical_delete: number
 
   @column()
