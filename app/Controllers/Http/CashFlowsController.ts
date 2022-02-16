@@ -1,5 +1,4 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { format } from 'date-fns'
 
 import CashFlow from 'App/Models/CashFlow'
 import Person from 'App/Models/Person'
@@ -23,7 +22,6 @@ export default class CashFlowsController {
 
   public async store({ request }: HttpContextContract) {
     const dataFlow = request.all()
-    dataFlow.duedate = format(new Date(), 'yyyy/MM/dd')
     await CashFlow.create(dataFlow)
   }
   
