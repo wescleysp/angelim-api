@@ -21,26 +21,31 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/', async () => {
-  return { hello: 'world' }
+  return { hello: 'API-Angelim Online' }
 })
 
-Route.resource('people', 'PeopleController').apiOnly()
-Route.resource('products', 'ProductsController').apiOnly()
-Route.resource('types', 'TypesController').apiOnly()
-Route.resource('providers', 'ProvidersController').apiOnly()
-Route.resource('customers', 'CustomersController').apiOnly()
-Route.resource('sellers', 'SellersController').apiOnly()
-Route.resource('order', 'OrdersController').apiOnly()
-Route.resource('orderitems', 'OrderItemsController').apiOnly()
-Route.resource('nfes', 'NfesController').apiOnly()
-Route.resource('transports', 'TransportsController').apiOnly()
-Route.resource('duties', 'DutiesController').apiOnly()
-Route.resource('expenses', 'ExpensesController').apiOnly()
-Route.resource('cashflows', 'CashFlowsController').apiOnly()
-Route.resource('stocks', 'StocksController').apiOnly()
-Route.resource('users', 'UsersController').apiOnly()
-Route.resource('dashcashes', 'DashCashesController').apiOnly()
-Route.resource('dashstocks', 'DashStocksController').apiOnly()
+Route.post('login', 'AuthController.store')
+Route.post('user', 'UsersController.store')
+
+Route.group(() => {
+  Route.resource('people', 'PeopleController').apiOnly()
+  Route.resource('products', 'ProductsController').apiOnly()
+  Route.resource('types', 'TypesController').apiOnly()
+  Route.resource('providers', 'ProvidersController').apiOnly()
+  Route.resource('customers', 'CustomersController').apiOnly()
+  Route.resource('sellers', 'SellersController').apiOnly()
+  Route.resource('order', 'OrdersController').apiOnly()
+  Route.resource('orderitems', 'OrderItemsController').apiOnly()
+  Route.resource('nfes', 'NfesController').apiOnly()
+  Route.resource('transports', 'TransportsController').apiOnly()
+  Route.resource('duties', 'DutiesController').apiOnly()
+  Route.resource('expenses', 'ExpensesController').apiOnly()
+  Route.resource('cashflows', 'CashFlowsController').apiOnly()
+  Route.resource('stocks', 'StocksController').apiOnly()
+  Route.resource('users', 'UsersController').apiOnly()
+  Route.resource('dashcashes', 'DashCashesController').apiOnly()
+  Route.resource('dashstocks', 'DashStocksController').apiOnly()
+}).middleware('auth')
 
 
 
