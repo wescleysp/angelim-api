@@ -25,7 +25,7 @@ Route.get('/', async () => {
 })
 
 Route.post('login', 'AuthController.store')
-Route.post('user', 'UsersController.store')
+Route.resource('user', 'UsersController').apiOnly()
 
 Route.group(() => {
   Route.resource('people', 'PeopleController').apiOnly()
