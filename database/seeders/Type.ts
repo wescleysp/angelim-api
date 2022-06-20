@@ -55,6 +55,56 @@ export default class TypeSeeder extends BaseSeeder {
       {
         description: 'marítimo',
         table: 'transports'
+      },
+      {
+        description: 'Serraia',
+        table: 'people',
+        parent_id: 2
+      },
+      {
+        description: 'Fazenda',
+        table: 'people',
+        parent_id: 2
+      },
+      {
+        description: 'Toreiro',
+        table: 'people',
+        parent_id: 2
+      },
+      {
+        description: 'Motorista',
+        table: 'people',
+        parent_id: 2
+      },
+      {
+        description: 'Carregador',
+        table: 'people',
+        parent_id: 2
+      },
+      {
+        description: 'Transportadora',
+        table: 'people',
+        parent_id: 2
+      },
+      {
+        description: 'Balsa',
+        table: 'people',
+        parent_id: 2
+      },
+      {
+        description: 'Posto de Gasolina',
+        table: 'people',
+        parent_id: 2
+      },
+      {
+        description: 'Representante',
+        table: 'people',
+        parent_id: 2
+      },
+      {
+        description: 'Extrator',
+        table: 'people',
+        parent_id: 2
       }
     ])
   }

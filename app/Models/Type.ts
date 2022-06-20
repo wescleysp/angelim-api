@@ -11,6 +11,9 @@ export default class Type extends BaseModel {
   @column()
   public table: string
 
+  @column()
+  public parent_id: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

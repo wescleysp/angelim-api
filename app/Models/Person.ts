@@ -38,6 +38,9 @@ export default class Person extends BaseModel {
   @column()
   public type_id: number
 
+  @column()
+  public provider_type: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

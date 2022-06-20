@@ -7,8 +7,14 @@ export default class ProductsController {
     return await Product.all()
   }
 
-  public async store({ request }: HttpContextContract) {
+  public async store({ request, response }: HttpContextContract) {
     const data = request.all()
+    const checkProduct = await Product.query().where('name', data.name).where('type_id', data.type_id)
+
+    if(checkProduct.length !== 0) {
+      return response.status(422)
+    }
+
     const product = await Product.create(data)
     return product
   }
