@@ -11,6 +11,7 @@ export default class PeopleController {
 
       await Promise.all(person.map(async (element, idx) => {
         let data = person[idx].serializeAttributes()
+        data.adresses = person[idx].adresses.serializeAttributes()
         data.name_type = (await Type.findByOrFail('id', element.type_id)).description
         !!element.provider_type && (data.name_provider = (await Type.findByOrFail('id', element.provider_type)).description)
         responseData.push(data)
