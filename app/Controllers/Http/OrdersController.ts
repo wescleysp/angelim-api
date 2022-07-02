@@ -19,13 +19,24 @@ export default class OrdersController {
   public async index() {
     let orders = await OrderSales.query().orderBy('created_at', 'desc')
       .preload('order_items')
+    let responseData: any = [];
 
     await Promise.all(orders.map(async (element, idx) => {
-      orders[idx].provider_id !== null && (orders[idx].provider_id = (await Database.from('people').select('name').where('id', '=', element.provider_id))[0].name)
-      orders[idx].client_id !== null && (orders[idx].client_id = (await Database.from('people').select('name').where('id', '=', element.client_id))[0].name)
+      let data = orders[idx].serializeAttributes()
+      data.order_items = []
+      orders[idx].provider_id !== null && (data.provider_id = (await Database.from('people').select('name').where('id', '=', element.provider_id))[0].name)
+      orders[idx].client_id !== null && (data.client_id = (await Database.from('people').select('name').where('id', '=', element.client_id))[0].name)
+      
+      await Promise.all(orders[idx].order_items.map(async (itm) => {
+        let item = itm.serializeAttributes()
+        item.product_name = (await Database.from('products').select('name').where('id', '=', itm.product_id))[0].name
+        data.order_items.push(item)
+      }))
+      
+      responseData.push(data)
     }));
 
-    return orders
+    return responseData;
   }
 
   public async store({ request }: HttpContextContract) {

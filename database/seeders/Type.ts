@@ -57,7 +57,7 @@ export default class TypeSeeder extends BaseSeeder {
         table: 'transports'
       },
       {
-        description: 'Serraia',
+        description: 'Serraria',
         table: 'people',
         parent_id: 2
       },

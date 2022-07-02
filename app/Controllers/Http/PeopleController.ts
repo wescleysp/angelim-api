@@ -43,6 +43,7 @@ export default class PeopleController {
        await person.merge(dataPerson).save()
        await adress.merge(dataAdress).save()
     }
+    
 
     public async destroy ({ params }: HttpContextContract) {
       const person = await Person.findByOrFail('id', params.id);

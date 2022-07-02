@@ -46,7 +46,10 @@ Route.group(() => {
   Route.resource('dashcashes', 'DashCashesController').apiOnly()
   Route.resource('dashstocks', 'DashStocksController').apiOnly()
   Route.resource('providertypes', 'ProviderTypesController').apiOnly()
+  Route.resource('productionorders', 'ProductionOrdersController').apiOnly()
+  
 }).middleware('auth')
+Route.resource('productionprints', 'ProductionPrintsController').apiOnly()
 
 
 

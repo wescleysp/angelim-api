@@ -18,6 +18,12 @@ export default class ProductionItems extends BaseSchema {
         .references('order_items.id')
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
+      table
+        .integer('product_id')
+        .unsigned()
+        .references('products.id')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
       table.integer('amount')
       table.string('unity', 10)
       table.string('description')

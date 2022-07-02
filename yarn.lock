@@ -617,6 +617,11 @@
   resolved "https://registry.yarnpkg.com/@types/validator/-/validator-13.6.3.tgz#31ca2e997bf13a0fffca30a25747d5b9f7dbb7de"
   integrity sha512-fWG42pMJOL4jKsDDZZREnXLjc3UE0R8LOJfARWYg6U966rxDT7TYejYzLnUF5cvSObGg34nd0+H2wHHU5Omdfw==
 
+"@types/vanilla-masker@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@types/vanilla-masker/-/vanilla-masker-1.2.1.tgz#5eb024a7ee9d5e9e2caf7e61cb07c37a80c74445"
+  integrity sha512-b5ajZhEff5Ymf0znJ6ReHd4RIzZxb8QORD52/gC9qiG1wgBG+uraJbOgIXIyn4/OLOko/bmDajXuxn2WnYD3ew==
+
 "@typescript-eslint/eslint-plugin@^4.28.3":
   version "4.33.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.33.0.tgz#c24dc7c8069c7706bc40d99f6fa87edcb2005276"
@@ -4915,6 +4920,11 @@ validator@^13.6.0:
   version "13.6.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-13.6.0.tgz#1e71899c14cdc7b2068463cb24c1cc16f6ec7059"
   integrity sha512-gVgKbdbHgtxpRyR8K0O6oFZPhhB5tT1jeEHZR0Znr9Svg03U0+r9DXWMrnRAB+HtCStDQKlaIZm42tVsVjqtjg==
+
+vanilla-masker@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/vanilla-masker/-/vanilla-masker-1.2.0.tgz#c2830e9d994a5fecd2261506477c2707fe589756"
+  integrity sha512-5SQeksiWaRYfbTaLVcqDPlvINGRt7ODbmWqqMMdT4GuZEC01KJm7FxaytscI5GZ9mlkTNQDwqllSHbv1ENxQEA==
 
 vary@^1.1.2:
   version "1.1.2"
