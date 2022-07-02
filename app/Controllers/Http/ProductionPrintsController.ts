@@ -125,8 +125,8 @@ export default class ProductionPrintsController {
             ]
           },
           layout: {
-            paddingTop: function(i, node) { return 4; },
-            paddingBottom: function(i, node) { return 4; },
+            paddingTop: function() { return 4; },
+            paddingBottom: function() { return 4; },
 
           }
         },
@@ -141,8 +141,8 @@ export default class ProductionPrintsController {
             ]
           },
           layout: {
-            paddingTop: function(i, node) { return 4; },
-            paddingBottom: function(i, node) { return 4; },
+            paddingTop: function() { return 4; },
+            paddingBottom: function() { return 4; },
 
           }
         },
@@ -155,8 +155,8 @@ export default class ProductionPrintsController {
             ]
           },
           layout: {
-            paddingTop: function(i, node) { return 4; },
-            paddingBottom: function(i, node) { return 4; },
+            paddingTop: function() { return 4; },
+            paddingBottom: function() { return 4; },
 
           }
         },
@@ -170,8 +170,8 @@ export default class ProductionPrintsController {
             ]
           },
           layout: {
-            paddingTop: function(i, node) { return 4; },
-            paddingBottom: function(i, node) { return 4; },
+            paddingTop: function() { return 4; },
+            paddingBottom: function() { return 4; },
 
           }
         },
