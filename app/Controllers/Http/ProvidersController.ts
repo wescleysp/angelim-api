@@ -6,7 +6,7 @@ import Type from 'App/Models/Type'
 
 export default class ProvidersController {
   public async index () {
-    const response = await Person.query().where('type_id', 2)
+    const response = await Person.query().where('logical_delete', 0).where('type_id', 2)
     let responseData: any = [];
 
     await Promise.all(response.map(async (element, idx) => {

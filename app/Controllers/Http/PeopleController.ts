@@ -47,7 +47,7 @@ export default class PeopleController {
 
     public async destroy ({ params }: HttpContextContract) {
       const person = await Person.findByOrFail('id', params.id);
-      await person.delete();
+      await person.merge({logical_delete: true}).save();
    }
        
 }

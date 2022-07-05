@@ -19,6 +19,10 @@ export default class ProductsController {
     return product
   }
 
+  public async show ({ params }: HttpContextContract) {
+    return await Product.query().where('logical_delete', params.id)
+  }
+
   public async update({ params, request }: HttpContextContract) {
     const product = await Product.findByOrFail('id', params.id);
     const data = request.all()
@@ -27,6 +31,6 @@ export default class ProductsController {
 
   public async destroy({ params }: HttpContextContract) {
     const product = await Product.findByOrFail('id', params.id);
-    await product.delete();
+    await product.merge({logical_delete: true}).save();
   }
 }
