@@ -105,7 +105,20 @@ export default class TypeSeeder extends BaseSeeder {
         description: 'Extrator',
         table: 'people',
         parent_id: 2
-      }
+      },
+      {
+        description: 'Manejo',
+        table: 'farm_projects'
+      },
+      {
+        description: 'Corte Raso',
+        table: 'farm_projects'
+      },
+      {
+        description: 'Reflorestamento',
+        table: 'people',
+        parent_id: 2
+      },
     ])
   }
 }

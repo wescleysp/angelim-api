@@ -1,111 +1,71 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { format } from 'date-fns'
 
-import OrderSales from 'App/Models/SalesOrder'
-import CashFlow from 'App/Models/CashFlow'
-import OrderItem from 'App/Models/OrderItem'
+import Nfe from 'App/Models/Nfe'
 import Stock from 'App/Models/Stock'
+import CashFlow from 'App/Models/CashFlow'
 
 const calcTotals = (items: any) => {
-  let totalValue = 0;
-  items.map((item: any) => totalValue = totalValue + (item.qtdserverd * item.inputvalue))
-  return totalValue;
+  return items.reduce((acumulador: number, item: any) => { return acumulador + (item.amount * item.value) }, 0)
+
 }
-
 export default class NfesController {
-  
-  public async store({ request }: HttpContextContract) {
-    const idOrder = request.input('id')
-    const data = request.except(['id', 'inputnf'])
 
-    const items = request.input('inputnf')
-
-    const order = await OrderSales.findByOrFail('id', idOrder)
-    const dataOrder = Object.fromEntries(Object.entries(data).filter((item) => item[1] !== ''));
-    
-    order.merge(dataOrder).save()
-
-    const checkItemsQtdServerd = items.filter((item: any) => item.qtdserverd.length > 0)
-    
-    if (checkItemsQtdServerd.length > 0) {
-      // Atualização Itens
-      await Promise.all(items.map(async (element: any) => {
-        const itemUpdate = await OrderItem.findByOrFail('id', element.id)
-        await itemUpdate.merge({qtdserverd: element.qtdserverd ?? 0}).save()
-      }));
-
-      // Atualização Fluxo de Caixa
-      const flowProvider = await CashFlow.query()
-      .where('order_id', order.id)
-      .where('provider_id', order.provider_id)
-      
-      const newItems = await OrderItem.query().where('order_id', idOrder);
-      await flowProvider[0].merge({value: calcTotals(newItems) }).save()
-    }
-
-    // Atualização de Estoque
-    const newItems = await OrderItem.query().where('order_id', idOrder);
-    await Promise.all(newItems.map(async (element: any) => {
-      await Stock.create({
-        product_id: element.product_id,
-        volume: element.qtdserverd ?? element.qtdrequested,
-        type_id: 9,
-        order_id: element.order_id,
-      })
-    }));
-
-    const response = await OrderSales.query().where('id', idOrder).preload('order_items')
-
-    return response[0]
-
+  public async getNfe(id: number) {
+    return await Nfe.query().where('project_id', id).preload('nfe_items')
   }
 
 
-  public async update({ params, request }: HttpContextContract) {
+  public async store ({ request }: HttpContextContract) {
+    const dataNfe = request.except(['nfe_items', 'farm_id'])
+    const items = request.input('nfe_items')
+    const farmId = request.input('farm_id')
 
-    const dataOrder = request.only(['nfe', 'dof', 'dare'])
-  
-    const items = request.input('outputnf')
-    const checkItemsQtdServerd = items.filter((item: any) => item.outputvalue.length > 0) 
-
-    if (checkItemsQtdServerd.length > 0) {
-      // Atualização Itens
-      await Promise.all(items.map(async (element: any) => {
-        const itemUpdate = await OrderItem.findByOrFail('id', element.id)
-        await itemUpdate.merge({outputvalue: element.outputvalue ?? 0}).save()
-      }));
-    }
-
-    const newItems = await OrderItem.query().where('order_id', params.id);
+    const nfe = await Nfe.create(dataNfe)
+    await nfe.related('nfe_items').createMany(items)
 
 
-    // Atualização de Estoque
-    await Promise.all(newItems.map(async (element: any) => {
-      await Stock.create({
-        product_id: element.product_id,
-        volume: element.qtdserverd ?? element.qtdrequested,
-        type_id: 10,
-        order_id: element.order_id,
-      })
-    }));
-
-    // Atualização do Pedido
-    const order = await OrderSales.query().where('id', params.id).preload('order_items')
-    order[0].merge(dataOrder).save()
-
-    // Criação Cash flow cliente
-    await CashFlow.create({
-      value: newItems.reduce(
-        (acumulador: number, valorAtual: any) => 
-        { return acumulador + ((valorAtual.qtdserverd ?? valorAtual.qtdrequested) 
-          * (valorAtual.outputvalue ?? valorAtual.inputvalue))
-        }, 0), 
-      type_id: 8,
-      provider_id: order[0].client_id,
-      order_id: params.id,
-      duedate: format(new Date(), 'yyyy/MM/dd'),
+    //----Movimentação de Stock----
+    const dataStock = items.map((item: any) => {
+      return {
+        nfe_id: nfe.id,
+        product_id: item.product_id,
+        volume: item.amount,
+        type_id: 9,
+        project_id: dataNfe.project_id,
+        place_id: dataNfe.destiny_id,
+      }
     })
 
-    return order[0]
+    await Stock.createMany(dataStock)
+
+
+    //----Movimentação Financeira----
+    //Fazenda
+    const farm = {
+      nfe_id: nfe.id,
+      provider_id: farmId,
+      project_id: dataNfe.project_id,
+      value: calcTotals(items),
+      type_id: 7,
+      duedate: format(new Date(), 'yyyy/MM/dd')
+    }
+    await CashFlow.create(farm)
+
+    //Transporte
+    const transport = {
+      nfe_id: nfe.id,
+      provider_id: dataNfe.transport_id,
+      project_id: dataNfe.project_id,
+      value: dataNfe.transport_value,
+      type_id: 7,
+      duedate: format(new Date(), 'yyyy/MM/dd')
+    }
+    await CashFlow.create(transport)
+
+    return this.getNfe(dataNfe.project_id)
+  }
+
+  public async destroy ({}: HttpContextContract) {
   }
 }

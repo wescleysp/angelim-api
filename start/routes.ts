@@ -26,17 +26,19 @@ Route.get('/', async () => {
 
 Route.post('login', 'AuthController.store')
 Route.resource('user', 'UsersController').apiOnly()
+Route.resource('productionprints', 'ProductionPrintsController').apiOnly()
 
 Route.group(() => {
   Route.resource('people', 'PeopleController').apiOnly()
   Route.resource('products', 'ProductsController').apiOnly()
   Route.resource('types', 'TypesController').apiOnly()
   Route.resource('providers', 'ProvidersController').apiOnly()
+  Route.get('providers-bytype/:id', 'ProvidersController.getProvidersByType')
   Route.resource('customers', 'CustomersController').apiOnly()
   Route.resource('sellers', 'SellersController').apiOnly()
   Route.resource('order', 'OrdersController').apiOnly()
   Route.resource('orderitems', 'OrderItemsController').apiOnly()
-  Route.resource('nfes', 'NfesController').apiOnly()
+  Route.resource('ordernfs', 'OrderNfsController').apiOnly()
   Route.resource('transports', 'TransportsController').apiOnly()
   Route.resource('duties', 'DutiesController').apiOnly()
   Route.resource('expenses', 'ExpensesController').apiOnly()
@@ -47,9 +49,11 @@ Route.group(() => {
   Route.resource('dashstocks', 'DashStocksController').apiOnly()
   Route.resource('providertypes', 'ProviderTypesController').apiOnly()
   Route.resource('productionorders', 'ProductionOrdersController').apiOnly()
-  
+  Route.resource('farmprojects', 'FarmProjectsController').apiOnly()
+  Route.resource('nfes', 'NfesController').apiOnly()
+  Route.resource('reforest', 'ReforestController').apiOnly()
+  Route.resource('accounts', 'AccountsController').apiOnly()
 }).middleware('auth')
-Route.resource('productionprints', 'ProductionPrintsController').apiOnly()
 
 
 
