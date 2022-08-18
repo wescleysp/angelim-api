@@ -181,21 +181,18 @@ export default class OrdersController {
     const orderItems = await OrderItem.query().where('order_id', params.id)
     orderItems.forEach((item, idx) => {
       orderItems[idx].merge({logical_delete: 1}).save()
-      console.log(item)
     })
 
     // Canecelamento Fluxo de Caixa
     const cashFlow = await CashFlow.query().where('order_id', params.id)
     cashFlow.forEach((item, idx) => {
       cashFlow[idx].merge({logical_delete: 1}).save()
-      console.log(item)
     })
 
     // Canecelamento Estoque
     const stock = await Stock.query().where('order_id', params.id)
     stock.forEach((item, idx) => {
       stock[idx].merge({logical_delete: 1}).save()
-      console.log(item)
     })
 
   }

@@ -2,6 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { format } from 'date-fns'
 
 import Nfe from 'App/Models/Nfe'
+import NfeItem from 'App/Models/NfeItem'
 import Stock from 'App/Models/Stock'
 import CashFlow from 'App/Models/CashFlow'
 
@@ -66,6 +67,15 @@ export default class NfesController {
     return this.getNfe(dataNfe.project_id)
   }
 
-  public async destroy ({}: HttpContextContract) {
+  public async destroy ({ params }: HttpContextContract) {
+    
+    const nfe = await Nfe.findByOrFail('id', params.id)
+    await nfe.merge({logical_delete: 1}).save()
+
+    const stock = await Stock.findByOrFail('nfe_id', params.id)
+    await stock.merge({logical_delete: 1}).save()
+
+    const cashflow = await CashFlow.findByOrFail('nfe_id', params.id)
+    await cashflow.merge({logical_delete: 1}).save()
   }
 }

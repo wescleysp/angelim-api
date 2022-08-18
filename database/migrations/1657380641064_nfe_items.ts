@@ -24,8 +24,10 @@ export default class NfeItems extends BaseSchema {
         .references('products.id')
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
+      table.integer('units')
       table.integer('amount')
       table.decimal('value', 10, 2)
+      
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

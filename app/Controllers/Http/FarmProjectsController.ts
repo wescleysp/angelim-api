@@ -5,6 +5,8 @@ import { format } from 'date-fns'
 import FarmProject from 'App/Models/FarmProject'
 import Nfe from 'App/Models/Nfe'
 import Reforestation from 'App/Models/Reforestation'
+import CashFlow from 'App/Models/CashFlow'
+import Stock from 'App/Models/Stock'
 
 export default class FarmProjectsController {
   
@@ -50,6 +52,25 @@ export default class FarmProjectsController {
     return this.getFarmProject(farmProject.id)
   }
 
-  public async destroy ({}: HttpContextContract) {
+  public async destroy ({ params }: HttpContextContract) {
+    const farmProject = await FarmProject.findByOrFail('id', params.id)
+    farmProject.merge({logical_delete: 1}).save()
+
+    const nfe = await Nfe.query().where('project_id', params.id)
+    nfe.forEach((item, idx) => {
+      nfe[idx].merge({logical_delete: 1}).save()
+    })
+
+     // Canecelamento Fluxo de Caixa
+     const cashFlow = await CashFlow.query().where('project_id', params.id)
+     cashFlow.forEach((item, idx) => {
+       cashFlow[idx].merge({logical_delete: 1}).save()
+     })
+ 
+     // Canecelamento Estoque
+     const stock = await Stock.query().where('project_id', params.id)
+     stock.forEach((item, idx) => {
+       stock[idx].merge({logical_delete: 1}).save()
+     })
   }
 }
