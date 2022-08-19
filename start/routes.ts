@@ -53,6 +53,7 @@ Route.group(() => {
   Route.resource('nfes', 'NfesController').apiOnly()
   Route.resource('reforest', 'ReforestController').apiOnly()
   Route.resource('accounts', 'AccountsController').apiOnly()
+  Route.resource('clearing-accounts', 'ClearingAccountsController').apiOnly()
 }).middleware('auth')
 
 
