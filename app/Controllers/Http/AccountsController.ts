@@ -4,7 +4,7 @@ import Person from 'App/Models/Person'
 import Type from 'App/Models/Type'
 
 export default class AccountsController {
-  protected async calculateMovements (type: any) {
+  protected async calculateMovements (type: any, idProvider: number) {
     let response = {
       total: 0,
       pending: 0,
@@ -12,6 +12,7 @@ export default class AccountsController {
     }
 
     const dataFlows = await CashFlow.query()
+      .where('provider_id', idProvider)
       .where('type_id', type)
       .where('logical_delete', 0)
     
@@ -40,8 +41,8 @@ export default class AccountsController {
       data.type_name = (await Type.findByOrFail('id', element.type_id)).description
       !!element.provider_type && (data.provider_name = (await Type.findByOrFail('id', element.provider_type)).description)
       
-      data.payable = await this.calculateMovements(7) //Movimentações a pagar
-      data.receivable =  await this.calculateMovements(8) //Movimentações a receber
+      data.payable = await this.calculateMovements(7, data.id) //Movimentações a pagar
+      data.receivable =  await this.calculateMovements(8, data.id) //Movimentações a receber
 
       responseData.push(data)
     }));
@@ -49,9 +50,7 @@ export default class AccountsController {
     return responseData
   }
 
-  public async show ({}: HttpContextContract) {
-    
-  }
+  public async show ({}: HttpContextContract) {}
 
 
 

@@ -15,7 +15,7 @@ export default class CashFlowsController {
       !!element.provider_id && (data.name_provider = (await Person.findByOrFail('id', element.provider_id)).name)
       !!element.order_id && (data.order_code = (await SalesOrder.findByOrFail('id', element.order_id)).code)
       responseData.push(data)
-    }));
+    }))
 
     return responseData
   }
@@ -23,6 +23,26 @@ export default class CashFlowsController {
   public async store({ request }: HttpContextContract) {
     const dataFlow = request.all()
     await CashFlow.create(dataFlow)
+  }
+
+  public async show({ params }: HttpContextContract) {
+    let flows = await CashFlow.query().where('provider_id', params.id).where('logical_delete', 0).orderBy('created_at', 'desc')
+    const nameProvider = (await Person.findByOrFail('id', params.id)).name
+
+    let dataFlow: any = [];
+
+    await Promise.all(flows.map(async (element, idx) => {
+      let data = flows[idx].serializeAttributes()
+      !!element.order_id && (data.order_code = (await SalesOrder.findByOrFail('id', element.order_id)).code)
+      dataFlow.push(data)
+    }))
+
+    const responseData = {
+      nameProvider,
+      dataFlow
+    }
+
+    return responseData
   }
   
   public async update({ params }: HttpContextContract) {

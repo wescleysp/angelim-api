@@ -6,13 +6,14 @@ import CashFlow from 'App/Models/CashFlow'
 export default class ClearingAccountsController {
 
   public async store ({ request }: HttpContextContract) {
+    const value = request.input('value')
     const origem = request.input('origem')
     const destiny = request.input('destiny')
 
     //Movimentação Origem
     const dataOrigem = {
-      provider_id: origem.provider_id,
-      value: origem.value,
+      provider_id: origem.person_id,
+      value: value,
       type_id: 8,
       status: 1,
       duedate: format(new Date(), 'yyyy/MM/dd'),
@@ -22,8 +23,8 @@ export default class ClearingAccountsController {
 
     //Movimentação Destino
     const dataDestiny = {
-      provider_id: destiny.provider_id,
-      value: destiny.value,
+      provider_id: destiny.person_id,
+      value: value,
       type_id: 7,
       status: 1,
       duedate: format(new Date(), 'yyyy/MM/dd'),
