@@ -27,6 +27,7 @@ Route.get('/', async () => {
 Route.post('login', 'AuthController.store')
 Route.resource('user', 'UsersController').apiOnly()
 Route.resource('productionprints', 'ProductionPrintsController').apiOnly()
+Route.resource('personprints', 'PersonPrintsController').apiOnly()
 
 Route.group(() => {
   Route.resource('people', 'PeopleController').apiOnly()
@@ -55,6 +56,3 @@ Route.group(() => {
   Route.resource('accounts', 'AccountsController').apiOnly()
   Route.resource('clearing-accounts', 'ClearingAccountsController').apiOnly()
 }).middleware('auth')
-
-
-
